@@ -35,6 +35,7 @@
               zen-browser.packages.${system}.twilight
             ];
           }
+
 	  home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

@@ -31,15 +31,9 @@
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
 
-    neofetch
-
-    # archives
-    zip
-    unzip
-
-    # utils
-    ripgrep # recursively searches directories for a regex pattern
-    jq # A lightweight and flexible command-line JSON processor
+    pkgs.zed-editor
+    pkgs.pnpm
+    vscode
 
     # misc
     which
@@ -49,12 +43,7 @@
     #
     # it provides the command `nom` works just like `nix`
     # with more details log output
-    nix-output-monitor
-
-    # system tools
-    ethtool
-    pciutils # lspci
-    usbutils # lsusb
+    nix-output-monitor 
   ];
 
   # basic configuration of git, please change to your own
@@ -62,18 +51,6 @@
     enable = true;
     userName = "khaitbek";
     userEmail = "khaitbek2005@gmail.com";
-  };
-
-  # starship - an customizable prompt for any shell
-  programs.starship = {
-    enable = true;
-    # custom settings
-    settings = {
-      add_newline = false;
-      aws.disabled = true;
-      gcloud.disabled = true;
-      line_break.disabled = true;
-    };
   };
 
   # alacritty - a cross-platform, GPU-accelerated terminal emulator
