@@ -107,6 +107,14 @@
      jq
   ];
 
+  boot.loader.systemd-boot.configurationLimit = 5;
+  nix.gc = {
+     automatic = true;
+     date = "weekly";
+     options = "--delete-older-than 2w";
+  };
+  nix.settings.auto-optimise-store = true;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
