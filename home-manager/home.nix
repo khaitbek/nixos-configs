@@ -39,6 +39,15 @@
     which
     gnupg
 
+    # hyprland ecosystem
+    pkgs.hyprpaper
+    pkgs.waybar
+    pkgs.rofi
+
+    pkgs.oh-my-posh
+    pkgs.geist-font
+    pkgs.nerd-fonts.geist-mono
+
     # nix related
     #
     # it provides the command `nom` works just like `nix`
@@ -60,20 +69,28 @@
     settings = {
       env.TERM = "xterm-256color";
       font = {
-        size = 12;
-        draw_bold_text_with_bright_colors = true;
+        size = 14;
+	normal = {	
+	  family = "GeistMono Nerd Font Mono";
+	};
       };
       scrolling.multiplier = 5;
       selection.save_to_clipboard = true;
+      window = {
+	opacity = 0.5;
+	blur = true;
+	dynamic_title = true;
+      };
     };
   };
 
   programs.bash = {
     enable = true;
-    enableCompletion = true;
+    enableCompletion = true; 
     # TODO add your custom bashrc here
     bashrcExtra = ''
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
+      eval "$(oh-my-posh init bash --config 'https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/atomic.omp.json')"
     '';
 
     # set some aliases, feel free to add more or remove some
@@ -81,6 +98,39 @@
       urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
       urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
     };
+  };
+  
+  programs.kitty = {
+    enable = true;
+  };
+  
+  wayland.windowManager.hyprland = {
+    enable = true;
+    package = null;
+    portalPackage = null;
+  };
+  wayland.windowManager.hyprland.settings = {
+    "$mod" = "SUPER";
+    bind = [
+        "$mod, B, exec, zen"
+	"$mod, Return, exec, alacritty"
+	"$mod, R, exec, rofi"
+    ];
+    monitor = "eDP-1, preferred, auto, 1"; 
+    exec-once = "hyprpaper, waybar";
+  };
+  wayland.windowManager.hyprland.plugins = [];
+  services.hyprpaper.enable = true;
+  services.hyprpaper.settings = {
+    ipc = "on";
+    preload = ["~/Pictures/wallpapers/Kath.png"];
+    wallpaper = [
+	"eDP-1,~/Pictures/wallpapers/Kath.png"
+    ];
+  };
+  programs.waybar = {
+    enable = true;
+    systemd.enable = true;
   };
 
   # This value determines the home Manager release that your

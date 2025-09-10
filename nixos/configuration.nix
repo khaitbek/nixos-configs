@@ -34,17 +34,11 @@
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
-  # Enable the KDE Plasma Desktop Environment.
+  services.displayManager.sddm.wayland.enable = true;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -57,6 +51,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -74,8 +69,6 @@
     description = "Hayitbek";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kdePackages.kate
-    #  thunderbird
     ];
   };
 
@@ -110,10 +103,16 @@
   boot.loader.systemd-boot.configurationLimit = 5;
   nix.gc = {
      automatic = true;
-     date = "weekly";
+     dates = "weekly";
      options = "--delete-older-than 2w";
   };
   nix.settings.auto-optimise-store = true;
+  
+  # Enable the Hyprland module
+  programs.hyprland.enable = true;
+
+  # Hint electron apps to use wayland:
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
